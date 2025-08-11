@@ -26,11 +26,18 @@ export const uploadToCloudflareR2 = async (file, folder = 'uploads') => {
       Key: fileName,
       Body: file.buffer,
       ContentType: file.mimetype,
+      CacheControl: 'max-age=31536000',
+      Metadata: {
+        'uploaded-by': 'notebook-cms'
+      }
     });
 
     await r2.send(command);
     
+    // Use the correct R2 public URL
     const fileUrl = `${PUBLIC_URL}/${fileName}`;
+    
+    console.log('File uploaded to R2:', { fileName, fileUrl, publicUrl: PUBLIC_URL });
     
     return {
       url: fileUrl,

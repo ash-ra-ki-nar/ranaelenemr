@@ -6,6 +6,7 @@ import type { Project } from '../../types';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import ErrorMessage from '../../components/ui/ErrorMessage';
 import Modal from '../../components/ui/Modal';
+import { getImageUrl, getFallbackImageUrl } from '../../utils/imageUtils';
 import {
   DndContext,
   closestCenter,
@@ -58,12 +59,12 @@ const SortableProjectCard = ({ project, onDelete }: {
           <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
             {project.main_image_url ? (
               <img
-                src={project.main_image_url}
+                src={getImageUrl(project.main_image_url) || getFallbackImageUrl(64, 64)}
                 alt={project.title}
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yNCAzMkMzMC42Mjc0IDMyIDM2IDI2LjYyNzQgMzYgMjBDMzYgMTMuMzcyNiAzMC42Mjc0IDggMjQgOEMxNy4zNzI2IDggMTIgMTMuMzcyNiAxMiAyMEMxMiAyNi42Mjc0IDE3LjM3MjYgMzIgMjQgMzJaIiBmaWxsPSIjOUI5QjlCIi8+CjxwYXRoIGQ9Ik04IDQ4TDIwIDM2TDMyIDQ4TDQ0IDM2TDU2IDQ4VjU2SDhWNDhaIiBmaWxsPSIjOUI5QjlCIi8+Cjwvc3ZnPgo=';
+                  target.src = getFallbackImageUrl(64, 64);
                 }}
               />
             ) : (

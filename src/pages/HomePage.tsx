@@ -4,6 +4,9 @@ import { projectsApi } from '../services/api';
 import type { Project } from '../types';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import ErrorMessage from '../components/ui/ErrorMessage';
+import WavyMarquee from '../components/ui/WavyMarquee';
+import { getImageUrl, getFallbackImageUrl } from '../utils/imageUtils';
+import '../components/ui/ProjectCard.css';
 
 const HomePage = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -105,18 +108,20 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
+  const imageUrl = getImageUrl(project.main_image_url);
+  
   return (
     <Link to={`/project/${project.slug}`} className="block">
-      <div className={`project-card-fullwidth ${project.coming_soon ? 'coming-soon-card' : ''}`}>
-        {project.main_image_url ? (
+      <div className={`project-card-fullwidth ${project.coming_soon ? 'coming-soon-card' : ''} relative group`}>
+        {imageUrl ? (
           <img 
-            src={project.main_image_url} 
+            src={imageUrl} 
             alt={project.title}
             className="w-full h-96 object-cover"
             onError={(e) => {
               // Fallback for broken images
               const target = e.target as HTMLImageElement;
-              target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
+              target.src = getFallbackImageUrl(400, 384);
             }}
           />
         ) : (
@@ -124,21 +129,21 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             <span className="text-gray-400 text-sm">No image</span>
           </div>
         )}
+        
+        {/* Coming Soon Wavy Marquee Overlay */}
+        {project.coming_soon && (
+          <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-80 transition-opacity duration-300">
+            <WavyMarquee text={project.title} />
+          </div>
+        )}
+        
         <div className="project-card-overlay">
           <div className="text-center">
-            {project.coming_soon ? (
-              <h3 className="wavy project-card-title">
-                {project.title.split('').map((letter, index) => (
-                  <span key={index} className="letter">
-                    {letter === ' ' ? '\u00A0' : letter}
-                  </span>
-                ))}
-              </h3>
-            ) : (
+            {!project.coming_soon && (
               <h3 className="project-card-title">{project.title}</h3>
             )}
             {project.coming_soon && (
-              <p className="coming-soon-label text-white text-sm font-medium opacity-0 transition-opacity duration-300 mt-2">
+              <p className="coming-soon-label text-sm font-medium opacity-90 group-hover:opacity-0 transition-opacity duration-300 mt-2">
                 Coming Up
               </p>
             )}

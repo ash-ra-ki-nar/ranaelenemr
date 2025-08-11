@@ -74,10 +74,10 @@ CREATE TABLE IF NOT EXISTS media (
 INSERT INTO projects (title, subtitle, year, category, main_image_url, slug, coming_soon)
 VALUES 
 ('Digital Art Installation', 'Interactive multimedia experience', 2024, 'works', 
- 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop', 
+ 'https://pub-7c8b6de15604429f91020a1b08796bce.r2.dev/projects/sample-1.jpg', 
  'digital-art-installation', false),
 ('Urban Photography Series', 'Capturing city life through lens', 2024, 'parallel discourses',
- 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop',
+ 'https://pub-7c8b6de15604429f91020a1b08796bce.r2.dev/projects/sample-2.jpg',
  'urban-photography-series', false)
 ON CONFLICT (slug) DO NOTHING;
 
@@ -155,5 +155,22 @@ BEGIN
     
     IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'section_elements' AND policyname = 'Allow authenticated delete on section_elements') THEN
         CREATE POLICY "Allow authenticated delete on section_elements" ON section_elements FOR DELETE USING (true);
+    END IF;
+    
+    -- Media table policies (MISSING!)
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'media' AND policyname = 'Allow public read access on media') THEN
+        CREATE POLICY "Allow public read access on media" ON media FOR SELECT USING (true);
+    END IF;
+    
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'media' AND policyname = 'Allow authenticated insert on media') THEN
+        CREATE POLICY "Allow authenticated insert on media" ON media FOR INSERT WITH CHECK (true);
+    END IF;
+    
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'media' AND policyname = 'Allow authenticated update on media') THEN
+        CREATE POLICY "Allow authenticated update on media" ON media FOR UPDATE USING (true);
+    END IF;
+    
+    IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE tablename = 'media' AND policyname = 'Allow authenticated delete on media') THEN
+        CREATE POLICY "Allow authenticated delete on media" ON media FOR DELETE USING (true);
     END IF;
 END $$;

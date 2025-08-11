@@ -6,6 +6,7 @@ import type { Project } from '../../types';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 import ErrorMessage from '../../components/ui/ErrorMessage';
 import SectionEditor from '../../components/admin/SectionEditor';
+import { getImageUrl, getFallbackImageUrl } from '../../utils/imageUtils';
 
 const ProjectEditor = () => {
   const { id } = useParams<{ id: string }>();
@@ -49,7 +50,7 @@ const ProjectEditor = () => {
         category: data.category,
         coming_soon: data.coming_soon || false,
       });
-      setMainImagePreview(data.main_image_url || null);
+      setMainImagePreview(getImageUrl(data.main_image_url) || null);
     } catch (err) {
       setError('Failed to load project');
       console.error('Error fetching project:', err);
@@ -265,6 +266,10 @@ const ProjectEditor = () => {
                   src={mainImagePreview}
                   alt="Main image preview"
                   className="w-full h-64 object-cover rounded-lg"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = getFallbackImageUrl(400, 256);
+                  }}
                 />
                 <button
                   type="button"

@@ -74,9 +74,7 @@ const ProjectPage = () => {
               </h1>
             )}
             <div className="flex items-center space-x-4">
-              <span className="text-2xl font-medium text-gray-600">
-                {project.year}
-              </span>
+              {/* Date/Year hidden as requested */}
               {project.coming_soon && (
                 <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
                   Coming Soon

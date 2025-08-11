@@ -3,6 +3,7 @@ import { X, Image, Video, Trash2, Search, Upload, Check } from 'lucide-react';
 import { mediaApi } from '../../services/api';
 import type { MediaItem } from '../../types';
 import LoadingSpinner from '../ui/LoadingSpinner';
+import { getImageUrl, getFallbackImageUrl } from '../../utils/imageUtils';
 
 interface MediaLibraryProps {
   isOpen: boolean;
@@ -128,7 +129,8 @@ const MediaLibrary = ({ isOpen, onClose, onSelect, mediaType }: MediaLibraryProp
 
   const handleSelect = (item: MediaItem) => {
     setSelectedItem(item.id);
-    onSelect(item.url, item.id);
+    const validatedUrl = getImageUrl(item.url);
+    onSelect(validatedUrl || item.url, item.id);
     onClose();
   };
 
@@ -258,12 +260,12 @@ const MediaLibrary = ({ isOpen, onClose, onSelect, mediaType }: MediaLibraryProp
                   >
                     {item.file_type === 'image' ? (
                       <img
-                        src={item.url}
+                        src={getImageUrl(item.url) || getFallbackImageUrl(200, 200)}
                         alt={item.original_name}
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
-                          target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJyb2tlbiBJbWFnZTwvdGV4dD48L3N2Zz4=';
+                          target.src = getFallbackImageUrl(200, 200);
                         }}
                       />
                     ) : (

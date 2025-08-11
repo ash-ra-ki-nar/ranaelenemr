@@ -5,6 +5,7 @@ import RichTextEditor from './RichTextEditor';
 import MediaLibrary from './MediaLibrary';
 import type { SectionElement } from '../../types';
 import LoadingSpinner from '../ui/LoadingSpinner';
+import { getImageUrl, getFallbackImageUrl } from '../../utils/imageUtils';
 
 interface ElementEditorProps {
   element: SectionElement;
@@ -246,15 +247,16 @@ const ElementEditor = ({ element, onUpdate }: ElementEditorProps) => {
         );
 
       case 'image':
-        return element.media_url ? (
+        const imageUrl = getImageUrl(element.media_url);
+        return imageUrl ? (
           <div>
             <img
-              src={element.media_url}
+              src={imageUrl}
               alt={element.alt_text || ''}
               className="w-full h-auto rounded-lg"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkJyb2tlbiBJbWFnZTwvdGV4dD48L3N2Zz4=';
+                target.src = getFallbackImageUrl(200, 150);
               }}
             />
             {element.caption && (
@@ -268,12 +270,15 @@ const ElementEditor = ({ element, onUpdate }: ElementEditorProps) => {
         );
 
       case 'video':
-        return element.media_url ? (
+        const videoUrl = getImageUrl(element.media_url);
+        return videoUrl ? (
           <div>
             <video
-              src={element.media_url}
+              src={videoUrl}
               controls
               className="w-full h-auto rounded-lg"
+              onError={() => {
+              }}
             />
             {element.caption && (
               <p className="text-sm text-gray-600 italic mt-2">{element.caption}</p>
