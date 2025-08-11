@@ -1,0 +1,246 @@
+/* Rich Text Editor Custom Styles */
+.rich-text-editor {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.6;
+}
+
+.rich-text-editor h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 1rem 0;
+  color: #1f2937;
+}
+
+.rich-text-editor h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0.75rem 0;
+  color: #374151;
+}
+
+.rich-text-editor h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+  color: #4b5563;
+}
+
+.rich-text-editor blockquote {
+  border-left: 4px solid #3b82f6;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  background: #f8fafc;
+  border-radius: 0 0.5rem 0.5rem 0;
+  padding: 1rem;
+}
+
+.rich-text-editor ul, 
+.rich-text-editor ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.rich-text-editor li {
+  margin: 0.25rem 0;
+}
+
+.rich-text-editor a {
+  color: #3b82f6;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.rich-text-editor a:hover {
+  color: #1d4ed8;
+}
+
+.rich-text-editor strong {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.rich-text-editor em {
+  font-style: italic;
+  color: #374151;
+}
+
+.rich-text-editor p {
+  margin: 0.5rem 0;
+  color: #374151;
+}
+
+.rich-text-editor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Toolbar enhancements */
+.rich-text-container .ProseMirror {
+  outline: none;
+  padding: 1rem;
+  min-height: 200px;
+}
+
+.rich-text-container .ProseMirror:focus {
+  outline: none;
+}
+
+/* ProseMirror heading styles */
+.rich-text-container .ProseMirror h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 1rem 0 0.5rem 0;
+  line-height: 1.2;
+  color: #1f2937;
+}
+
+.rich-text-container .ProseMirror h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0.875rem 0 0.5rem 0;
+  line-height: 1.3;
+  color: #374151;
+}
+
+.rich-text-container .ProseMirror h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0.75rem 0 0.5rem 0;
+  line-height: 1.4;
+  color: #4b5563;
+}
+
+.rich-text-container .ProseMirror h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0.625rem 0 0.5rem 0;
+  line-height: 1.4;
+  color: #4b5563;
+}
+
+.rich-text-container .ProseMirror h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0.5rem 0 0.5rem 0;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.rich-text-container .ProseMirror h6 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0.5rem 0 0.5rem 0;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+.rich-text-container .ProseMirror p {
+  margin: 0.5rem 0;
+  color: #374151;
+}
+
+.rich-text-container .ProseMirror strong {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.rich-text-container .ProseMirror em {
+  font-style: italic;
+  color: #374151;
+}
+
+/* Placeholder styling */
+.rich-text-container .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #9ca3af;
+  pointer-events: none;
+  height: 0;
+}
+
+/* Font family styles */
+.rich-text-editor .sans-serif {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.rich-text-editor .serif {
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+.rich-text-editor .monospace {
+  font-family: 'Courier New', 'Monaco', monospace;
+}
+
+.rich-text-editor .cursive {
+  font-family: 'Comic Sans MS', 'Brush Script MT', cursive;
+}
+
+/* Text color styles */
+.rich-text-editor .color {
+  /* Color styles are applied inline by Tiptap */
+}
+
+/* Highlight styles */
+.rich-text-editor .highlight {
+  /* Highlight styles are applied inline by Tiptap */
+}
+
+/* Color picker preview */
+.color-preview {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  border-radius: 0 0 4px 4px;
+}
+
+/* Color swatches dropdown */
+.group:hover .group-hover\\:block {
+  display: block;
+}
+
+/* Active color swatch */
+.active-color {
+  border: 2px solid #3b82f6 !important;
+  box-shadow: 0 0 0 2px white;
+}
+
+/* Color swatches grid */
+.color-swatches-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.25rem;
+  width: 12rem;
+}
+
+/* Color swatch button */
+.color-swatch {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #d1d5db;
+  transition: transform 0.1s ease;
+  cursor: pointer;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+}
+
+/* Active color swatch */
+.color-swatch.active {
+  box-shadow: 0 0 0 2px #3b82f6;
+}
+
+/* Color dropdown */
+.color-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.25rem;
+}

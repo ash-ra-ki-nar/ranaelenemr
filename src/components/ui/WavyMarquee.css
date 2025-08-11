@@ -1,0 +1,58 @@
+/* Wavy Marquee Container */
+.wavy-marquee-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1000;
+  overflow: hidden;
+  mix-blend-mode: difference;
+}
+
+.wavy-text {
+  fill: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.25vw;
+  font-size: 6vw;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* SVG animation handles the movement */
+
+@media (min-width: 768px) {
+  .wavy-text {
+    font-size: 5vw;
+    letter-spacing: 0.2vw;
+  }
+}
+
+@media (min-width: 1024px) {
+  .wavy-text {
+    font-size: 4.5vw;
+    letter-spacing: 0.18vw;
+  }
+}
+
+@media (min-width: 1440px) {
+  .wavy-text {
+    font-size: 4vw;
+    letter-spacing: 0.15vw;
+  }
+}
+
+@media (min-width: 1920px) {
+  .wavy-text {
+    font-size: 3.5vw;
+    letter-spacing: 0.12vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .wavy-text {
+    font-size: 7vw;
+    letter-spacing: 0.18vw;
+  }
+}
