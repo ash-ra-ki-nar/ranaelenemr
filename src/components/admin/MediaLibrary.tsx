@@ -3,7 +3,7 @@ import { X, Image, Video, Trash2, Search, Upload, Check } from 'lucide-react';
 import { mediaApi } from '../../services/api';
 import type { MediaItem } from '../../types';
 import LoadingSpinner from '../ui/LoadingSpinner';
-import { getImageUrl, getFallbackImageUrl } from '../../utils/imageUtils';
+import { getImageUrl, getFallbackImageUrl, generateVideoThumbnail } from '../../utils/imageUtils';
 
 interface MediaLibraryProps {
   isOpen: boolean;
@@ -20,12 +20,53 @@ const MediaLibrary = ({ isOpen, onClose, onSelect, mediaType }: MediaLibraryProp
   const [uploading, setUploading] = useState(false);
   const [deletingIds, setDeletingIds] = useState<Set<number>>(new Set());
   const [selectedForDeletion, setSelectedForDeletion] = useState<Set<number>>(new Set());
+  const [videoThumbnails, setVideoThumbnails] = useState<Map<number, string>>(new Map());
 
   useEffect(() => {
     if (isOpen) {
       fetchMedia();
     }
   }, [isOpen, mediaType]);
+
+  // Generate thumbnails for videos
+  useEffect(() => {
+    const generateThumbnails = async () => {
+      const videoItems = media.filter(item => item.file_type === 'video');
+      
+      for (const item of videoItems) {
+        if (!videoThumbnails.has(item.id)) {
+          const videoUrl = getImageUrl(item.url);
+          if (videoUrl) {
+            generateVideoThumbnail(videoUrl)
+              .then(thumbnail => {
+                setVideoThumbnails(prev => new Map(prev).set(item.id, thumbnail));
+              })
+              .catch(() => {
+                // Create a simple placeholder for failed videos
+                const canvas = document.createElement('canvas');
+                canvas.width = 200;
+                canvas.height = 150;
+                const ctx = canvas.getContext('2d');
+                if (ctx) {
+                  ctx.fillStyle = '#374151';
+                  ctx.fillRect(0, 0, 200, 150);
+                  ctx.fillStyle = '#ffffff';
+                  ctx.font = '14px Arial';
+                  ctx.textAlign = 'center';
+                  ctx.fillText('VIDEO', 100, 75);
+                  const placeholder = canvas.toDataURL('image/jpeg', 0.8);
+                  setVideoThumbnails(prev => new Map(prev).set(item.id, placeholder));
+                }
+              });
+          }
+        }
+      }
+    };
+
+    if (media.length > 0 && mediaType === 'video') {
+      generateThumbnails();
+    }
+  }, [media, mediaType]);
 
   const fetchMedia = async () => {
     try {
@@ -269,8 +310,16 @@ const MediaLibrary = ({ isOpen, onClose, onSelect, mediaType }: MediaLibraryProp
                         }}
                       />
                     ) : (
-                      <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-                        <Video size={32} className="text-white" />
+                      <div className="w-full h-full bg-gray-800 flex items-center justify-center relative">
+                        {videoThumbnails.has(item.id) ? (
+                          <img
+                            src={videoThumbnails.get(item.id)}
+                            alt={item.original_name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <Video size={32} className="text-white" />
+                        )}
                       </div>
                     )}
                   </div>

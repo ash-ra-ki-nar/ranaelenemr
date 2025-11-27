@@ -7,39 +7,41 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import ProjectEditor from './pages/admin/ProjectEditor';
 import AboutEditor from './pages/admin/AboutEditor';
 import ProtectedAdminRoute from './components/ProtectedAdminRoute';
-function App() {
 
+function App() {
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      <main>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/project/:slug" element={<ProjectPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/admin" element={
-            <ProtectedAdminRoute>
-              <AdminDashboard />
-            </ProtectedAdminRoute>
-          } />
-          <Route path="/admin/projects/new" element={
-            <ProtectedAdminRoute>
-              <ProjectEditor />
-            </ProtectedAdminRoute>
-          } />
-          <Route path="/admin/projects/:id/edit" element={
-            <ProtectedAdminRoute>
-              <ProjectEditor />
-            </ProtectedAdminRoute>
-          } />
-          <Route path="/admin/about/edit" element={
-            <ProtectedAdminRoute>
-              <AboutEditor />
-            </ProtectedAdminRoute>
-          } />
-        </Routes>
-      </main>
-    </div>
+    <>
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/project/:slug" element={<ProjectPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/admin" element={
+              <ProtectedAdminRoute>
+                <AdminDashboard />
+              </ProtectedAdminRoute>
+            } />
+            <Route path="/admin/projects/new" element={
+              <ProtectedAdminRoute>
+                <ProjectEditor />
+              </ProtectedAdminRoute>
+            } />
+            <Route path="/admin/projects/:id/edit" element={
+              <ProtectedAdminRoute>
+                <ProjectEditor />
+              </ProtectedAdminRoute>
+            } />
+            <Route path="/admin/about/edit" element={
+              <ProtectedAdminRoute>
+                <AboutEditor />
+              </ProtectedAdminRoute>
+            } />
+          </Routes>
+        </main>
+      </div>
+    </>
   );
 }
 

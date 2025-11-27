@@ -48,8 +48,8 @@ const SortableProjectCard = ({ project, onDelete }: {
 
   return (
     <div ref={setNodeRef} style={style} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4 flex-1">
+      <div className="flex items-center justify-between min-w-0">
+        <div className="flex items-center space-x-4 flex-1 min-w-0">
           {/* Drag Handle */}
           <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing">
             <GripVertical size={20} className="text-gray-400 hover:text-gray-600" />
@@ -76,10 +76,10 @@ const SortableProjectCard = ({ project, onDelete }: {
           
           {/* Project Info */}
           <div className="flex-1 min-w-0">
-            <div className="flex items-center space-x-2 mb-1">
-              <h3 className="text-lg font-medium text-gray-900 truncate">{project.title}</h3>
+            <div className="flex items-start space-x-2 mb-1">
+              <h3 className="text-lg font-medium text-gray-900 truncate flex-1 min-w-0 leading-tight">{project.title}</h3>
               {project.coming_soon && (
-                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 flex-shrink-0">
                   Coming Soon
                 </span>
               )}
@@ -98,7 +98,7 @@ const SortableProjectCard = ({ project, onDelete }: {
         </div>
         
         {/* Actions */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 flex-shrink-0 ml-4">
           <Link
             to={`/project/${project.slug}`}
             className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
@@ -253,7 +253,7 @@ const AdminDashboard = () => {
     <div className="pt-16 min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold text-gray-900">Portfolio Dashboard</h1>
             <Link
@@ -267,7 +267,7 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Works Projects */}
           <div>

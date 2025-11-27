@@ -3,15 +3,21 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: none !important;
 }
 
-.project-card-fullwidth:hover {
-  transform: scale(1.02);
+.project-card-fullwidth img {
+  box-shadow: none !important;
 }
 
-.project-card-fullwidth:not(.coming-soon-card):hover {
-  transform: scale(1.02);
+/* FORCE BLACK HOVER ON ALL CARDS */
+.project-card-fullwidth:hover,
+.coming-soon-card:hover,
+.project-card-fullwidth.coming-soon-card:hover {
+  background: rgba(0, 0, 0, 0.15) !important;
+  filter: none !important;
+  box-shadow: none !important;
 }
 
 .project-card-overlay {
@@ -19,13 +25,19 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.3));
   padding: 2rem;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 120px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project-card-fullwidth:hover .project-card-overlay {
+  opacity: 1;
 }
 
 .project-card-title {
@@ -40,26 +52,11 @@
   opacity: 1;
 }
 
+/* REMOVE ALL COMING SOON SPECIAL STYLING */
 .coming-soon-card {
-  /* border: 2px solid #f59e0b; */
-}
-
-.coming-soon-label {
-  background: transparent;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0.25rem;
-  display: inline-block;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: white;
-}
-
-/* Lime green hover effect for coming soon cards */
-.coming-soon-card:hover {
-  box-shadow: 0 0 0 3px rgba(132, 204, 22, 0.3);
-  transform: scale(1.02);
-  filter: brightness(1.1) hue-rotate(60deg);
+  background: none !important;
+  border: none !important;
+  filter: none !important;
 }
 
 /* Coming up text should be black in project pages (not in cards) */

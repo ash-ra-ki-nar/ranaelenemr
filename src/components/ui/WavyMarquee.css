@@ -22,18 +22,18 @@
   justify-content: center;
 }
 
-/* Make text 50% smaller in project cards */
+/* Make text smaller in project cards */
 .project-card-fullwidth .wavy-text {
-  font-size: 3vw;
-  letter-spacing: 0.125vw;
+  font-size: 0.7vw;
+  letter-spacing: 0.035vw;
 }
 
 .wavy-text {
   fill: #ffffff;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.25vw;
-  font-size: 6vw;
+  letter-spacing: 0.075vw;
+  font-size: 1.8vw;
   font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -41,44 +41,44 @@
 
 @media (min-width: 768px) {
   .wavy-text {
-    font-size: 5vw;
-    letter-spacing: 0.2vw;
+    font-size: 1.5vw;
+    letter-spacing: 0.06vw;
   }
   
   .project-card-fullwidth .wavy-text {
-    font-size: 2.5vw;
-    letter-spacing: 0.1vw;
+    font-size: 0.63vw;
+    letter-spacing: 0.028vw;
   }
 }
 
 @media (min-width: 1024px) {
   .wavy-text {
-    font-size: 4.5vw;
-    letter-spacing: 0.18vw;
+    font-size: 1.35vw;
+    letter-spacing: 0.054vw;
   }
   
   .project-card-fullwidth .wavy-text {
-    font-size: 2.25vw;
-    letter-spacing: 0.09vw;
+    font-size: 0.56vw;
+    letter-spacing: 0.025vw;
   }
 }
 
 @media (min-width: 1440px) {
   .wavy-text {
-    font-size: 4vw;
-    letter-spacing: 0.15vw;
+    font-size: 1.2vw;
+    letter-spacing: 0.045vw;
   }
   
   .project-card-fullwidth .wavy-text {
-    font-size: 2vw;
-    letter-spacing: 0.075vw;
+    font-size: 0.49vw;
+    letter-spacing: 0.021vw;
   }
 }
 
 @media (min-width: 1920px) {
   .wavy-text {
-    font-size: 3.5vw;
-    letter-spacing: 0.12vw;
+    font-size: 1.05vw;
+    letter-spacing: 0.036vw;
   }
   
   .project-card-fullwidth .wavy-text {

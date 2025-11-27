@@ -1,5 +1,5 @@
 import type { SectionElement } from '../../types';
-import { getImageUrl, getFallbackImageUrl } from '../../utils/imageUtils';
+import { getImageUrl, getFallbackImageUrl, isArabicText } from '../../utils/imageUtils';
 import VideoPlayer from '../ui/VideoPlayer';
 
 interface ElementRendererProps {
@@ -10,17 +10,27 @@ const ElementRenderer = ({ element }: ElementRendererProps) => {
   const renderContent = () => {
     switch (element.type) {
       case 'text':
+        const textContent = element.content || '';
+        const isRTL = isArabicText(textContent);
         return (
           <div 
-            className="prose prose-lg max-w-none"
-            dangerouslySetInnerHTML={{ __html: element.content || '' }}
+            className={`prose prose-lg ${isRTL ? 'arabic-text' : ''}`}
+            style={{ direction: isRTL ? 'rtl' : 'ltr', textAlign: isRTL ? 'right' : 'left' }}
+            dangerouslySetInnerHTML={{ __html: textContent }}
           />
         );
 
       case 'quote':
+        const quoteContent = element.content || '';
+        const isQuoteRTL = isArabicText(quoteContent);
         return (
-          <blockquote className="quote-element border-l-4 border-gray-300 pl-4 italic text-lg text-gray-700">
-            {element.content}
+          <blockquote 
+            className={`quote-element border-gray-300 italic text-lg text-gray-700 ${
+              isQuoteRTL ? 'border-r-4 pr-4 arabic-text' : 'border-l-4 pl-4'
+            }`}
+            style={{ direction: isQuoteRTL ? 'rtl' : 'ltr', textAlign: isQuoteRTL ? 'right' : 'left' }}
+          >
+            {quoteContent}
           </blockquote>
         );
 
@@ -33,7 +43,7 @@ const ElementRenderer = ({ element }: ElementRendererProps) => {
                 <img
                   src={imageUrl}
                   alt={element.alt_text || ''}
-                  className="w-full h-auto rounded-lg shadow-sm block"
+                  className="w-full h-auto rounded-lg block"
                   onError={(e) => {
                     // Fallback for broken images from Cloudflare R2
                     const target = e.target as HTMLImageElement;
@@ -42,7 +52,11 @@ const ElementRenderer = ({ element }: ElementRendererProps) => {
                 />
                 {element.caption && (
                   <p 
-                    className="text-sm text-gray-600 italic mt-2 text-center"
+                    className={`text-sm text-gray-600 italic mt-2 ${isArabicText(element.caption) ? 'arabic-text' : ''}`}
+                    style={{ 
+                      direction: isArabicText(element.caption) ? 'rtl' : 'ltr',
+                      textAlign: isArabicText(element.caption) ? 'right' : 'center'
+                    }}
                   >
                     {element.caption}
                   </p>
@@ -80,7 +94,13 @@ const ElementRenderer = ({ element }: ElementRendererProps) => {
                   />
                 </div>
                 {element.caption && (
-                  <p className="text-sm text-gray-600 italic mt-2 text-center">
+                  <p 
+                    className={`text-sm text-gray-600 italic mt-2 ${isArabicText(element.caption) ? 'arabic-text' : ''}`}
+                    style={{ 
+                      direction: isArabicText(element.caption) ? 'rtl' : 'ltr',
+                      textAlign: isArabicText(element.caption) ? 'right' : 'center'
+                    }}
+                  >
                     {element.caption}
                   </p>
                 )}

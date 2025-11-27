@@ -191,6 +191,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing...' }:
               <option value="serif" style={{ fontFamily: 'serif' }}>Serif</option>
               <option value="monospace" style={{ fontFamily: 'monospace' }}>Monospace</option>
               <option value="cursive" style={{ fontFamily: 'cursive' }}>Cursive</option>
+              <option value="IBM Plex Sans Arabic" style={{ fontFamily: 'IBM Plex Sans Arabic' }}>IBM Plex Sans Arabic</option>
             </select>
           </div>
 

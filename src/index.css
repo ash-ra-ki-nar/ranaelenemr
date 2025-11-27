@@ -1,20 +1,65 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* NUCLEAR SHADOW REMOVAL - HOMEPAGE ONLY */
+.pt-16.h-screen *, 
+.pt-16.h-screen *::before, 
+.pt-16.h-screen *::after,
+.project-card-fullwidth *,
+.project-card-fullwidth *::before,
+.project-card-fullwidth *::after {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  --tw-shadow: none !important;
+  --tw-shadow-colored: none !important;
+}
+
+/* FORCE BLACK HOVER - NUCLEAR OPTION */
+.project-card-fullwidth:hover,
+.coming-soon-card:hover,
+div[class*="coming-soon"]:hover,
+div[class*="project-card"]:hover {
+  background: rgba(0, 0, 0, 0.15) !important;
+  background-color: rgba(0, 0, 0, 0.15) !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  box-shadow: none !important;
+}
+
 @layer base {
   html {
     font-family: 'Roboto', system-ui, sans-serif;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
   }
   
   body {
     @apply transition-colors duration-300;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  
+  * {
+    /* Removed max-width constraint to allow Tailwind classes to work properly */
+  }
+  
+  .container, .max-w-6xl, .max-w-5xl, .max-w-4xl, .max-w-3xl {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   h1, h2, h3, h4, h5, h6, .title-font {
     font-family: 'DM Sans', system-ui, sans-serif;
+  }
+  
+  .arabic-text {
+    font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
   }
 }
 
@@ -193,7 +238,7 @@
   }
   
   .card {
-    @apply bg-white rounded-lg shadow-sm border border-gray-200;
+    @apply bg-white rounded-lg border border-gray-200;
   }
   
   .section-grid-1 {
@@ -208,6 +253,8 @@
   .rich-content {
     @apply leading-relaxed;
   }
+  
+  
 
   .rich-content img {
     @apply h-auto my-8;
@@ -381,6 +428,4 @@
   @apply transition-all duration-200;
 }
 
-.element-editor-container:hover {
-  @apply shadow-sm;
-}
+/* Removed shadow from element editor hover */

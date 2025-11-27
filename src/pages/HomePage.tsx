@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { projectsApi } from '../services/api';
 import type { Project } from '../types';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
+import SvgLoader from '../components/ui/SvgLoader';
 import ErrorMessage from '../components/ui/ErrorMessage';
 import WavyMarquee from '../components/ui/WavyMarquee';
 import { getImageUrl, getFallbackImageUrl } from '../utils/imageUtils';
@@ -32,14 +32,7 @@ const HomePage = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <LoadingSpinner size="lg" />
-          <p className="text-gray-600 mt-4">Loading portfolio...</p>
-        </div>
-      </div>
-    );
+    return <SvgLoader />;
   }
 
   if (error) {
@@ -54,11 +47,11 @@ const HomePage = () => {
   const parallelProjects = projects.filter(p => p.category === 'parallel discourses');
 
   return (
-    <div className="pt-16 h-screen flex flex-col relative">
+    <div className="pt-16 h-screen flex flex-col relative" style={{ boxShadow: 'none' }}>
       {/* Scrollable Content Columns */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 flex-1 min-h-0 relative">
+      <div className="grid grid-cols-1 lg:grid-cols-2 flex-1 min-h-0 relative" style={{ boxShadow: 'none' }}>
         {/* Works Column */}
-        <div className="flex flex-col h-full min-h-0 relative">
+        <div className="flex flex-col h-full min-h-0 relative" style={{ boxShadow: 'none' }}>
           <div className="absolute top-4 left-4 z-50 pointer-events-none">
             <h2 className="text-3xl font-normal text-white title-font">works</h2>
           </div>
@@ -79,9 +72,9 @@ const HomePage = () => {
         </div>
 
         {/* Parallel Discourse Column */}
-        <div className="flex flex-col h-full min-h-0 relative">
+        <div className="flex flex-col h-full min-h-0 relative" style={{ boxShadow: 'none' }}>
           <div className="absolute top-4 left-4 z-50 pointer-events-none">
-            <h2 className="text-3xl font-normal text-white title-font">parallel discourse</h2>
+            <h2 className="text-3xl font-normal text-white title-font">parallel discourses</h2>
           </div>
           <div className="overflow-y-scroll scrollbar-hide" style={{ maxHeight: 'calc(100vh - 64px)' }}>
             {parallelProjects.length > 0 ? (
@@ -99,6 +92,8 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      
+      
     </div>
   );
 };
@@ -112,12 +107,29 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   
   return (
     <Link to={`/project/${project.slug}`} className="block">
-      <div className={`project-card-fullwidth ${project.coming_soon ? 'coming-soon-card' : ''} relative group`}>
+      <div 
+        className={`project-card-fullwidth ${project.coming_soon ? 'coming-soon-card' : ''} relative group`} 
+        style={{ 
+          aspectRatio: '11 / 8',
+          boxShadow: 'none !important',
+          background: 'transparent',
+          border: 'none',
+          filter: 'none'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = 'rgba(0, 0, 0, 0.15)';
+          e.currentTarget.style.filter = 'none';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = 'transparent';
+        }}
+      >
         {imageUrl ? (
           <img 
             src={imageUrl} 
             alt={project.title}
-            className="w-full h-96 object-cover"
+            className="w-full h-full object-cover"
+            style={{ boxShadow: 'none' }}
             onError={(e) => {
               // Fallback for broken images
               const target = e.target as HTMLImageElement;
@@ -125,8 +137,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             }}
           />
         ) : (
-          <div className="w-full h-96 bg-gray-200 flex items-center justify-center">
-            <span className="text-gray-400 text-sm">No image</span>
+          <div className="w-full h-full bg-white flex items-center justify-center">
+            <span className="text-black text-sm">No image</span>
           </div>
         )}
         
@@ -141,11 +153,6 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           <div className="text-center">
             {!project.coming_soon && (
               <h3 className="project-card-title">{project.title}</h3>
-            )}
-            {project.coming_soon && (
-              <p className="coming-soon-label text-sm font-medium opacity-90 group-hover:opacity-0 transition-opacity duration-300 mt-2">
-                Coming Up
-              </p>
             )}
           </div>
         </div>

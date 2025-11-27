@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { Play, Pause } from 'lucide-react';
+import { Play } from 'lucide-react';
+import { isArabicText } from '../../utils/imageUtils';
 
 interface VideoPlayerProps {
   videoUrl: string | null;
@@ -7,27 +8,18 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, caption }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [showControls, setShowControls] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const handlePlayPause = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        videoRef.current.play();
-        setIsPlaying(true);
-        setShowControls(true);
-      }
-    }
-  };
-
   const handleVideoClick = () => {
-    if (!showControls) {
-      handlePlayPause();
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play();
+      } else {
+        videoRef.current.pause();
+      }
+      // Hide the overlay after first interaction
+      setShowOverlay(false);
     }
   };
 
@@ -40,30 +32,22 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, caption }) => {
   }
 
   return (
-    <div className="video-element">
-      <div 
-        className="relative group cursor-pointer"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onClick={handleVideoClick}
-      >
+    <div className="video-element mx-4">
+      <div className="relative group cursor-pointer">
         <video
           ref={videoRef}
           className="w-full h-auto block"
           preload="metadata"
           playsInline
-          muted
-          controls={showControls}
+          controls
           style={{ 
             display: 'block',
             margin: 0,
             padding: 0,
             border: 'none',
-            outline: 'none'
+            outline: 'none',
+            minHeight: '300px'
           }}
-          controlsList="nodownload"
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
           onError={() => {
           }}
           onLoadedMetadata={(e) => {
@@ -85,30 +69,29 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoUrl, caption }) => {
           Your browser does not support the video tag.
         </video>
 
-        {/* Play/Pause Button Overlay */}
-        {(!showControls || (showControls && isHovered)) && (
+        {/* Play Button Overlay - only shown until first interaction */}
+        {showOverlay && (
           <div 
-            className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
-              isHovered || !showControls ? 'opacity-100' : 'opacity-0'
-            }`}
-            style={{ pointerEvents: showControls ? 'none' : 'auto' }}
+            className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-100 group-hover:opacity-100"
+            onClick={handleVideoClick}
           >
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handlePlayPause();
-              }}
               className="bg-black bg-opacity-50 hover:bg-opacity-70 text-white rounded-full p-4 transition-all duration-200 transform hover:scale-110"
-              style={{ pointerEvents: 'auto' }}
             >
-              {isPlaying ? <Pause size={32} /> : <Play size={32} />}
+              <Play size={32} />
             </button>
           </div>
         )}
       </div>
 
       {caption && (
-        <p className="text-sm text-gray-600 italic mt-2 text-center">
+        <p 
+          className={`text-sm text-gray-600 italic mt-2 ${isArabicText(caption) ? 'arabic-text' : ''}`}
+          style={{ 
+            direction: isArabicText(caption) ? 'rtl' : 'ltr',
+            textAlign: isArabicText(caption) ? 'right' : 'center'
+          }}
+        >
           {caption}
         </p>
       )}

@@ -1,0 +1,22 @@
+@keyframes pulse1 {
+  0%, 10% { opacity: 1; }
+  25%, 100% { opacity: 0; }
+}
+
+@keyframes pulse2 {
+  0%, 25% { opacity: 0; }
+  35%, 50% { opacity: 1; }
+  65%, 100% { opacity: 0; }
+}
+
+@keyframes pulse3 {
+  0%, 50% { opacity: 0; }
+  60%, 75% { opacity: 1; }
+  90%, 100% { opacity: 0; }
+}
+
+@keyframes pulse4 {
+  0%, 75% { opacity: 0; }
+  85%, 95% { opacity: 1; }
+  100% { opacity: 0; }
+}

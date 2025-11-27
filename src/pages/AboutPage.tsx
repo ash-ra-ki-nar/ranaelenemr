@@ -1,8 +1,9 @@
 import { useState, useEffect, useReducer } from 'react';
 import { aboutApi } from '../services/api';
 import type { About } from '../types';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
+import SvgLoader from '../components/ui/SvgLoader';
 import ErrorMessage from '../components/ui/ErrorMessage';
+import Footer from '../components/layout/Footer';
 
 const AboutPage = () => {
   const [about, setAbout] = useState<About | null>(null);
@@ -42,14 +43,7 @@ const AboutPage = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <LoadingSpinner size="lg" />
-          <p className="text-gray-600 mt-4">Loading about page...</p>
-        </div>
-      </div>
-    );
+    return <SvgLoader />;
   }
 
   if (error) {
@@ -61,10 +55,10 @@ const AboutPage = () => {
   }
 
   return (
-    <div className="pt-16 min-h-screen bg-white">
+    <div className="pt-16 min-h-screen bg-white flex flex-col">
       {/* Content */}
-      <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-12">
-        <div className="rich-content">
+      <div className="px-4 sm:px-6 lg:px-8 flex-grow">
+        <div className="rich-content mx-auto" style={{ maxWidth: '52rem' }}>
           {about && about.content ? (
             <div 
               className="prose prose-lg max-w-none"
@@ -76,21 +70,21 @@ const AboutPage = () => {
             </div>
           )}
           
-          {/* Contact Information and Social Links */}
-          <div className="mt-12 pt-8 border-t border-gray-200">
-            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8">
+          {/* Contact Info - Email, Social Icons, and CV in one line */}
+          <div className="mt-12 flex flex-col items-center justify-center">
+            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
               {/* Email */}
-              <a 
-                href="mailto:ranaelnemr1@gmail.com" 
-                className="text-gray-700 hover:text-primary-600 transition-colors font-medium"
-              >
+              <a href="mailto:ranaelnemr1@gmail.com" className="text-gray-700 hover:text-primary-600 transition-colors">
                 ranaelnemr1@gmail.com
               </a>
+              
+              {/* Separator */}
+              <span className="text-gray-300">|</span>
               
               {/* Social Media Icons */}
               <div className="flex items-center space-x-6">
                 <a 
-                  href="https://instagram.com" 
+                  href="https://www.instagram.com/rana.elnemr" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-700 hover:text-primary-600 transition-colors"
@@ -101,7 +95,7 @@ const AboutPage = () => {
                   </svg>
                 </a>
                 <a 
-                  href="https://vimeo.com" 
+                  href="https://vimeo.com/user66283766" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-700 hover:text-primary-600 transition-colors"
@@ -112,10 +106,26 @@ const AboutPage = () => {
                   </svg>
                 </a>
               </div>
+              
+              {/* Separator */}
+              <span className="text-gray-300">|</span>
+              
+              {/* CV Link */}
+              <a 
+                href="https://pub-7c8b6de15604429f91020a1b08796bce.r2.dev/rana%20elnemr%202-page-cv%202025%20.pdf" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-700 hover:text-primary-600 transition-colors"
+              >
+                2-page c.v.
+              </a>
             </div>
           </div>
         </div>
       </div>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

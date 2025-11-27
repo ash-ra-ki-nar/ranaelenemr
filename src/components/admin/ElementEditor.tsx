@@ -5,7 +5,7 @@ import RichTextEditor from './RichTextEditor';
 import MediaLibrary from './MediaLibrary';
 import type { SectionElement } from '../../types';
 import LoadingSpinner from '../ui/LoadingSpinner';
-import { getImageUrl, getFallbackImageUrl } from '../../utils/imageUtils';
+import { getImageUrl, getFallbackImageUrl, convertToEmbedUrl } from '../../utils/imageUtils';
 
 interface ElementEditorProps {
   element: SectionElement;
@@ -38,7 +38,7 @@ const ElementEditor = ({ element, onUpdate }: ElementEditorProps) => {
       
       // Always include embed_url for embed elements
       if (element.type === 'embed') {
-        updateData.embed_url = embedUrl;
+        updateData.embed_url = convertToEmbedUrl(embedUrl);
       }
       
       // Include media fields for image and video elements

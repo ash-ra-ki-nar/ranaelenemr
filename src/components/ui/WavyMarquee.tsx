@@ -8,7 +8,7 @@ interface WavyMarqueeProps {
 
 const WavyMarquee: React.FC<WavyMarqueeProps> = ({ text, className = '' }) => {
   // Create a very long continuous text string for seamless loop
-  const repeatedText = Array(100).fill(`${text} | `).join('');
+  const repeatedText = Array(200).fill(`${text} | `).join('');
   
   // Generate unique ID for each instance to avoid conflicts
   const uniqueId = React.useMemo(() => `wavePath-${Math.random().toString(36).substr(2, 9)}`, []);
@@ -38,7 +38,7 @@ const WavyMarquee: React.FC<WavyMarqueeProps> = ({ text, className = '' }) => {
         <defs>
           <path
             id={uniqueId}
-            d="M0,100 Q250,50 500,100 T1000,100"
+            d="M0,100 Q62.5,85 125,100 T250,100 Q312.5,85 375,100 T500,100 Q562.5,85 625,100 T750,100 Q812.5,85 875,100 T1000,100"
             fill="none"
           />
         </defs>
@@ -53,7 +53,7 @@ const WavyMarquee: React.FC<WavyMarqueeProps> = ({ text, className = '' }) => {
               ref={animateRef}
               attributeName="startOffset"
               values="0%;-100%"
-              dur="25s"
+              dur="50s"
               repeatCount="indefinite"
               begin="indefinite"
               restart="always"
